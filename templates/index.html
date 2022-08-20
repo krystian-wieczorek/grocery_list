@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+<div class="content">
+    <h1>Grocery List</h1>
+    {% if items|length < 1 %}
+    <h4>The list is empty. Add some items below!</h4>
+    {% else %}
+    <table>
+        <tr>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Added</th>
+            <th>Last Changed</th>
+            <th>Actions</th>
+
+        </tr>
+        <tr>
+        {% for item in items %}
+            <td>{{ item.content }}</td>
+            <td>{{ item.count}}</td>
+            <td>{{ item.date_created.strftime("%X %x")  }}</td>
+            
+            <td>{{item.last_changed.strftime("%X %x") }}</td>
+            <td>
+                <a href="/increment/{{item.id}}" class="button">+</a><a href="/decrement/{{item.id}}" class="button">-</a>
+                <br>
+                <a href="/delete/{{item.id}}" class="button">Delete</a>
+                <br>
+                <a href="/update/{{item.id}}" class="button">Update</a>
+            </td>
+        </tr>
+        {% endfor %}
+
+
+    </table>
+    {% endif %}
+    <form action="/" method="POST">
+        <input type="text" name="content" id="content">
+        <input type ="submit" value="Add Item">
+    </form>
+</div>
+{% endblock %}
